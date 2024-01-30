@@ -1,0 +1,14 @@
+Dataset1<-read.csv("C:/Users/death/Desktop/Copied versions/rbbp5_vs_N2_emb(1).csv")
+
+#Trying to rename $Wormbase.WBGene_UID and failing miserably
+Dataset1$WBGene_UID<-paste (Dataset1$Wormbase.WBGene_UID)
+
+#Trying to arange 2nd dataset for separation of upregulated and downregulated values
+Dataset2 = data.frame(Dataset1$log2FoldChange)
+Dataset1[Dataset1$log2FoldChange < 0, 17]
+
+Dataset2 = Dataset1[Dataset1$log2FoldChange < 0,]
+# Line above selected all negative values in log2FoldChange and pasted them and their details into Dataset2
+
+Dataset3 = Dataset1[Dataset1$log2FoldChange > 0,]
+#Line above did the same for positive values placing them into Dataset3
