@@ -113,180 +113,65 @@ Dataset12 = Dataset10[Dataset10$log2FoldChange > 0,]
 View(Dataset11)
 View(Dataset12)
 
-#History of inputs:
-rbbp5_vs_N2_emb(1)<-read.csv("C:\Users\death\Dropbox\UG Bioinformatics 2023_24\Jacob Parker\DATA_DO NOT MODIFY\Copied versions\rbbp5_vs_N2_emb(1).csv")
-rbbp5_vs_N2_emb(1)<-read.csv("C:\Users\death\Desktop\Copied versions\rbbp5_vs_N2_emb(1).csv")
-rbbp5_vs_N2_emb(1)<-read.csv("C:Users\death\Desktop\Copied versions\rbbp5_vs_N2_emb(1).csv")
-rbbp5_vs_N2_emb(1)<-read.csv("C:\Users\death\Desktop\Copied versions\rbbp5_vs_N2_emb(1).csv")
-rbbp5_vs_N2_emb(1)<-read.csv("C:/Users/death/Desktop/Copied versions/rbbp5_vs_N2_emb(1).csv")
-Dataset1<-read.csv("C:/Users/death/Desktop/Copied versions/rbbp5_vs_N2_emb(1).csv")
+#Volcano Plots:
+
+ggplot(data=NULL, aes(x=Dataset1$log2FoldChange, y=Dataset1$pval))
+ggplot(data = Dataset1, aes(x=Dataset1$log2FoldChange, y=Dataset1$pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval))
+ggplot(data = Dataset1$log2FoldChange, aes(x=log2FoldChange, y=pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval)) + geom_point(data = Dataset1$log2FoldChange, Dataset1$pval)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval)) + geom_point(data = Dataset1, aes(x=Dataset1$log2FoldChange, y=Dataset1$pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y=pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=pval)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y=pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y=-log10(pval))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10))
+#It started working here (I missed brackets)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,20))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,20)))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,5))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,5)))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log(pval,10)))
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval)))
+
+#Adding thresholds (unsure where they should be as multiple testing correction is needed I think?)
+p <- ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval))) + geom_point(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval)))
+View(p)
+p + geom_vline(xintercept=c(-2.5, 2.5), col="red") + geom_hline(yintercept=2.5, col="red")
 View(Dataset1)
-Dataset1$WBGene_UID<-paste (Dataset1$Wormbase.WBGene_UID)
-Desc(Dataset1)
-Dataset1
-Dataset1$log2FoldChange<-paste (Dataset2)
-Dataset2 = data.frame(dataset1$log2FoldChange)
-Dataset2 = data.frame(Dataset1$log2FoldChange)
-View(Dataset2)
-Dataset1$Wormbase.WBGene_UID<-paste (Dataset2)
-Dataset1$Wormbase.WBGene_UID<-paste (Dataset2)
-Dataset1$Wormbase.WBGene_UID <-paste (Dataset2)
-Dataset1$Wormbase.WBGene_UID <-paste (Dataset2)
-Dataset1[is.Wormbase:(Dataset1)] <-.
-Dataset1[is.Wormbase:WBGene(Dataset1)] <-.WBGene
-[colnames(Dataset1) == "Wormbase.WBGene_UID"] <- WBGene_UID
-colnames(Dataset1) == "Wormbase.WBGene_UID" <- WBGene_UID
-(colnames(Dataset1) == "Wormbase.WBGene_UID") <- WBGene_UID
-colnames(Dataset1) [colnames(Dataset1) == "Wormbase.WBGene_UID"] <- WBGene_UID
-colnames(Dataset1)[colnames(Dataset1) == "Wormbase.WBGene_UID"] <- "WBGene_UID"
-colnames(Dataset1)[colnames(Dataset1) == "WBGene_UID"] <- "Wormbase.WBGene_UID"
-colnames(Dataset1) [colnames(Dataset1) == "Wormbase.WBGene_UID"] <- WBGene_UID
-colnames(Dataset1) [colnames(Dataset1) == "Wormbase.WBGene_UID"] <- "WBGene_UID"
-rbbp5_vs_N2_emb(1)<-read.csv("C:\Users\death\Desktop\Copied versions\rbbp5_vs_N2_emb(1).csv")
-rbbp5_vs_N2_emb(1)<-read.csv("C:/Users/death/Desktop/Copied versions/rbbp5_vs_N2_emb(1).csv")
-Dataset1<-read.csv("C:/Users/death/Desktop/Copied versions/rbbp5_vs_N2_emb(1).csv")
-Dataset2 = data.frame(Dataset1$log2FoldChange)
-View(Dataset1)
-View(Dataset2)
-Dataset2$DownReg <- c(Dataset2[which(Dataset1.log2FoldChange < 0)])
-Dataset2$DownReg <- c(Dataset2[which(column 1 < 0)])
-Dataset2$DownReg <- c(Dataset2[which(column1 < 0)])
-Dataset2$DownReg <- c(Dataset2[which(log2FoldChange < 0)])
-Dataset1$DownReg <- c(Dataset1[which(log2FoldChange < 0)])
-Dataset1$DownReg <- c(Dataset1[which($log2FoldChange < 0)])
-Dataset1[Dataset1$log2FoldChange < 0]
-Dataset1[Dataset1$log2FoldChange < 0], check.names=FALSE
-Dataset1[Dataset1$log2FoldChange < 0] , check.names=FALSE
-Dataset1[Dataset1$log2FoldChange < 0]
-Dataset1[Dataset1$log2FoldChange < 0,]
-Dataset1[Dataset1$log2FoldChange < 0,] <-paste Dataset2$DownReg
-Dataset1[Dataset1$log2FoldChange < 0,] <-paste Dataset2
-Dataset1[Dataset1$log2FoldChange < 0,] <- paste Dataset2
-Dataset2$DownReg = Dataset1[Dataset1$log2FoldChange < 0,]
-Dataset2$DownReg = Dataset1[Dataset1$log2FoldChange < 0, 17]
-Dataset1[Dataset1$log2FoldChange < 0, 17]
-Dataset2$DownReg = Dataset1[Dataset1$log2FoldChange < 0, 17]
-Dataset2 = Dataset1[Dataset1$log2FoldChange < 0, 17]
-names(Dataset2)[names(Dataset2) == "V1"] = "DownReg"
-colnames(Dataset2)[colnames(Dataset2) == "V1"] = "DownReg"
-names(Dataset2)[names(Dataset2) == "V1"] = "DownReg"
-Dataset2 = Dataset1[Dataset1$log2FoldChange < 0,]
-Dataset3 = Dataset1[Dataset1$log2FoldChange > 0,]
-View(Dataset3)
-source("C:/Users/death/Desktop/Dissertation Code/Day 1.R")
-source("C:/Users/death/Desktop/Dissertation Coding/Dissertation Code/Day 1.R")
-Dataset1$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset1$Wormbase.WBGene_UID)
-Dataset1$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset1$Wormbase.WBGene_UID)
-View(Dataset1)
-subset(Dataset1, select = -c(WBGene_UID))
-Dataset1 <- subset(Dataset1, select = -c(WBGene_UID))
-Dataset1 <- subset(Dataset1, select = -c(WBGene_UID))
-colnames(Dataset1) [1] = "WBGene_UID"
-colnames(Dataset2) [1] = "WBGene_UID"
-colnames(Dataset3) [1] = "WBGene_UID"
-Dataset2$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset2$Wormbase.WBGene_UID)
-Dataset2$WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset2$WBGene_UID)
-View(Dataset2)
-Dataset3$WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset3$WBGene_UID)
-View(Dataset3)
-Dataset2 <- subset(Dataset1, select = -c(WBGene_UID))
-View(Dataset2)
-View(Dataset2)
-View(Dataset2)
-Dataset2 = Dataset1[Dataset1$log2FoldChange < 0,]
-Print(Dataset2$log2FoldChange)
-print(Dataset2$log2FoldChange)
-Dataset3 <- subset(Dataset3, select = -c(WBGene_UID.1))
-Dataset3 <- subset(Dataset3, select = -c(WBGene_UID.1))
-Dataset3 = Dataset1[Dataset1$log2FoldChange > 0,]
-print(Dataset3$log2FoldChange)
-Dataset4 <- read.csv("C:\Users\death\Desktop\Dissertation Coding\Copied versions\rbbp5_vs_N2_YA(1).csv")
-Dataset4 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/rbbp5_vs_N2_YA(1).csv")
-View(Dataset4)
-Dataset4 <- subset(Dataset4, select = -c(description))
-colnames(Dataset4) [1] = "WBGene_UID"
-colnames(Dataset1) [12 = "N_1"
-colnames(Dataset1) [1] = "N_1"
-colnames(Dataset1) [1] = "WBGene_UID"
-colnames(Dataset1) [2] = "N_1"
-colnames(Dataset1) [3] = "N_2"
-colnames(Dataset1) [4] = "N_3"
-colnames(Dataset1) [5] = "R_1"
-colnames(Dataset1) [6] = "R_2"
-colnames(Dataset1) [7] = "R_3"
-colnames(Dataset1) [8] = "N_1.1"
-colnames(Dataset1) [8] = "N_2.1"
-colnames(Dataset1) [8] = "N_1.1"
-colnames(Dataset1) [9] = "N_2.1"
-colnames(Dataset1) [10] = "N_3.1"
-colnames(Dataset1) [11] = "R_1.1"
-colnames(Dataset1) [12] = "R_2.1"
-colnames(Dataset1) [13] = "R_3.1"
-Dataset5 = Dataset4[Dataset4$log2FoldChange < 0,]
-view(Dataset5)
-View(Dataset5)
-colnames(Dataset2) [2] = "N_1"
-colnames(Dataset2) [3] = "N_2"
-colnames(Dataset2) [4] = "N_3"
-colnames(Dataset2) [5] = "R_1"
-colnames(Dataset2) [6] = "R_2"
-colnames(Dataset2) [7] = "R_3"
-colnames(Dataset2) [8] = "N_1.1"
-colnames(Dataset2) [9] = "N_2.1"
-colnames(Dataset2) [10] = "N_3.1"
-colnames(Dataset2) [11] = "R_1.1"
-colnames(Dataset2) [12] = "R_2.1"
-colnames(Dataset2) [13] = "R_3.1"
-colnames(Dataset3) [2] = "N_1"
-colnames(Dataset3) [3] = "N_2"
-colnames(Dataset3) [4] = "N_3"
-colnames(Dataset3) [5] = "R_1"
-colnames(Dataset3) [6] = "R_2"
-colnames(Dataset3) [7] = "R_3"
-colnames(Dataset3) [8] = "N_1.1"
-colnames(Dataset3) [9] = "N_2.1"
-colnames(Dataset3) [10] = "N_3.1"
-colnames(Dataset3) [11] = "R_1.1"
-colnames(Dataset3) [12] = "R_2.1"
-colnames(Dataset3) [13] = "R_3.1"
-View(Dataset5$log2FoldChange)
-print(Dataset5$log2FoldChange)
-Dataset6 = Dataset4[Dataset4$log2FoldChange > 0,]
-View(Dataset6)
-print(Dataset6$log2FoldChange)
-Dataset7 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/wdr5_vs_N2_emb(1).csv")
-View(Dataset7)
-Dataset7$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset7$Wormbase.WBGene_UID)
-View(Dataset7)
-colnames(Dataset7) [1] = "WBGene_UID"
-colnames(Dataset7) [2] = "N_1"
-colnames(Dataset7) [3] = "N_2"
-colnames(Dataset7) [4] = "N_3"
-colnames(Dataset7) [5] = "W_1"
-colnames(Dataset7) [6] = "W_2"
-colnames(Dataset7) [7] = "W_3"
-colnames(Dataset7) [8] = "N_1.1"
-colnames(Dataset7) [9] = "N_2.1"
-colnames(Dataset7) [10] = "N_3.1"
-colnames(Dataset7) [11] = "W_1.1"
-colnames(Dataset7) [12] = "W_2.1"
-colnames(Dataset7) [13] = "W_3.1"
-Dataset8 = Dataset7[Dataset7$log2FoldChange < 0,]
-Dataset9 = Dataset7[Dataset7$log2FoldChange > 0,]
-View(Dataset8, Dataset9)
-View(Dataset8)
-View(Dataset9)
-print(Dataset8$log2FoldChange)
-print(Dataset9$log2FoldChange)
-#Next Datasheet:
-Dataset10 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/wdr5_vs_N2_YA(1).csv")
-View(Dataset10)
-colnames(Dataset10) [1] = "WBGene_UID"
-Dataset10 <- subset(Dataset10, select = -c(description))
-Dataset11 = Dataset10[Dataset10$log2FoldChange < 0,]
-Dataset12 = Dataset10[Dataset10$log2FoldChange > 0,]
-View(Dataset11)
-View(Dataset12)
-print(Dataset11$log2FoldChange)
-print(Dataset12$log2FoldChange)
-source("C:/Users/death/Desktop/Dissertation Coding/Dissertation Code/Day 1.R")
+
+#Differentially Colouring the significant points
+Dataset1$diffexpressed <- "NS"
+Dataset1$diffexpressed[Dataset1$log2FoldChange>0.6 & Dataset1$pval<0.05] <- "Up"
+Dataset1$diffexpressed[Dataset1$log2FoldChange<(-0.6) & Dataset1$pval<0.05] <- "Down"
+#Final line of code for Volcano plot (coloration not quite worked properly still)
+ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + geom_vline(xintercept=c(-0.6, 0.6), col="red", linetype="dashed") + geom_hline(yintercept=0.05, col="red", linetype="dashed") + geom_point(size=2) + scale_colour_manual(values=c("blue", "grey", "red"), labels("Down", "Not Significant", "Up"))
+#2nd volcano plot (apears that the colouration worked for Dataset4, unsure why)
+Dataset4$diffexpressed <- "NS"
+Dataset4$diffexpressed[Dataset4$log2FoldChange>0.6 & Dataset4$pval<0.05] <- "Up"
+Dataset4$diffexpressed[Dataset4$log2FoldChange<(-0.6) & Dataset4$pval<0.05] <- "Down"
+ggplot(data = Dataset4, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + geom_vline(xintercept=c(-0.6, 0.6), col="red", linetype="dashed") + geom_hline(yintercept=0.05, col="red", linetype="dashed") + geom_point(size=2) + scale_colour_manual(values=c("blue", "grey", "red"), labels("Down", "Not Significant", "Up"))
+Warning message:
+  Removed 293 rows containing missing values
+(`geom_point()`). 
+#Warning msg above given for Dataset4
+#3rd Volcano plot (colouration also not great, smthing wrong with code)
+Dataset7$diffexpressed <- "NS"
+Dataset7$diffexpressed[Dataset7$log2FoldChange>0.6 & Dataset7$pval<0.05] <- "Up"
+Dataset7$diffexpressed[Dataset7$log2FoldChange<(-0.6) & Dataset7$pval<0.05] <- "Down"
+ggplot(data = Dataset7, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + geom_vline(xintercept=c(-0.6, 0.6), col="red", linetype="dashed") + geom_hline(yintercept=0.05, col="red", linetype="dashed") + geom_point(size=2) + scale_colour_manual(values=c("blue", "grey", "red"), labels("Down", "Not Significant", "Up"))
+#4th Volcano plot:
+Dataset10$diffexpressed <- "NS"
+Dataset10$diffexpressed[Dataset10$log2FoldChange>0.6 & Dataset10$pval<0.05] <- "Up"
+Dataset10$diffexpressed[Dataset10$log2FoldChange<(-0.6) & Dataset10$pval<0.05] <- "Down"
+ggplot(data = Dataset10, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + geom_vline(xintercept=c(-0.6, 0.6), col="red", linetype="dashed") + geom_hline(yintercept=0.05, col="red", linetype="dashed") + geom_point(size=2) + scale_colour_manual(values=c("blue", "grey", "red"), labels("Down", "Not Significant", "Up"))
+#Same warning msg as Dataset4 (2nd Volcano plot) - probably due to me not creating a N/A column
+Warning message:
+  Removed 739 rows containing missing values
+(`geom_point()`). 
