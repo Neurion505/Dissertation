@@ -1,0 +1,1212 @@
+names(Dataset1)
+sapply(Dataset1, class)
+nrow(Dataset1)
+
+Dataset1<-read.csv("C:/Users/death/Dropbox/UG Bioinformatics 2023_24/Jacob Parker/R Files/Tasks/Copied versions/rbbp5_vs_N2_emb(1).csv")
+#Dataset 1 = rbbp5_vs_N2_emb(1).csv and Datasets 2 and 3 are upregulated and downregulated genes from rbbp5_vs_N2_emb(1).csv
+
+# changing all the names of the cells in the 1st column
+Dataset1$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset1$Wormbase.WBGene_UID)
+# renaming 1st column:
+colnames(Dataset1) [1] = "WBGene_UID"
+colnames(Dataset2) [1] = "WBGene_UID"
+colnames(Dataset3) [1] = "WBGene_UID"
+
+#Onto 2nd Data sheet now:
+Dataset4 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/rbbp5_vs_N2_YA(1).csv")
+#Cleaning Dataset 4 columns
+Dataset4 <- subset(Dataset4, select = -c(description))
+colnames(Dataset4) [1] = "WBGene_UID"
+colnames(Dataset1) [2] = "N_1"
+colnames(Dataset1) [3] = "N_2"
+colnames(Dataset1) [4] = "N_3"
+colnames(Dataset1) [5] = "R_1"
+colnames(Dataset1) [6] = "R_2"
+colnames(Dataset1) [7] = "R_3"
+colnames(Dataset1) [8] = "N_1.1"
+colnames(Dataset1) [9] = "N_2.1"
+colnames(Dataset1) [10] = "N_3.1"
+colnames(Dataset1) [11] = "R_1.1"
+colnames(Dataset1) [12] = "R_2.1"
+colnames(Dataset1) [13] = "R_3.1"
+## Unsure what meanA and meanB correspond to so I am just going to leave them slightly different from Dataset1 for now
+#Dataset2 clean up:
+colnames(Dataset2) [2] = "N_1"
+colnames(Dataset2) [3] = "N_2"
+colnames(Dataset2) [4] = "N_3"
+colnames(Dataset2) [5] = "R_1"
+colnames(Dataset2) [6] = "R_2"
+colnames(Dataset2) [7] = "R_3"
+colnames(Dataset2) [8] = "N_1.1"
+colnames(Dataset2) [9] = "N_2.1"
+colnames(Dataset2) [10] = "N_3.1"
+colnames(Dataset2) [11] = "R_1.1"
+colnames(Dataset2) [12] = "R_2.1"
+colnames(Dataset2) [13] = "R_3.1"
+#Dataset3 clean up:
+colnames(Dataset3) [2] = "N_1"
+colnames(Dataset3) [3] = "N_2"
+colnames(Dataset3) [4] = "N_3"
+colnames(Dataset3) [5] = "R_1"
+colnames(Dataset3) [6] = "R_2"
+colnames(Dataset3) [7] = "R_3"
+colnames(Dataset3) [8] = "N_1.1"
+colnames(Dataset3) [9] = "N_2.1"
+colnames(Dataset3) [10] = "N_3.1"
+colnames(Dataset3) [11] = "R_1.1"
+colnames(Dataset3) [12] = "R_2.1"
+colnames(Dataset3) [13] = "R_3.1"
+
+Dataset5 = Dataset4[Dataset4$log2FoldChange < 0,]
+Dataset6 = Dataset4[Dataset4$log2FoldChange > 0,]
+#Dataset 4 = rbbp5_vs_N2_YA(1).csv
+#Datasets 5 and 6 are downregulated and upregulated genes from rbbp5_vs_N2_YA(1).csv
+
+#Next Datasheet:
+Dataset7 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/wdr5_vs_N2_emb(1).csv")
+View(Dataset7)
+#Dataset7 Cleanup
+Dataset7$Wormbase.WBGene_UID <- gsub("Wormbase:WB", "WB", Dataset7$Wormbase.WBGene_UID)
+View(Dataset7)
+colnames(Dataset7) [1] = "WBGene_UID"
+colnames(Dataset7) [2] = "N_1"
+colnames(Dataset7) [3] = "N_2"
+colnames(Dataset7) [4] = "N_3"
+colnames(Dataset7) [5] = "W_1"
+colnames(Dataset7) [6] = "W_2"
+colnames(Dataset7) [7] = "W_3"
+colnames(Dataset7) [8] = "N_1.1"
+colnames(Dataset7) [9] = "N_2.1"
+colnames(Dataset7) [10] = "N_3.1"
+colnames(Dataset7) [11] = "W_1.1"
+colnames(Dataset7) [12] = "W_2.1"
+colnames(Dataset7) [13] = "W_3.1"
+
+#Creating data.frames for Dataset8 and 9 + checking them:
+Dataset8 = Dataset7[Dataset7$log2FoldChange < 0,]
+Dataset9 = Dataset7[Dataset7$log2FoldChange > 0,]
+View(Dataset8)
+View(Dataset9)
+print(Dataset8$log2FoldChange)
+print(Dataset9$log2FoldChange)
+#Dataset8 and 9 are Downregulated and Upregulated genes
+
+#Next Datasheet:
+Dataset10 <- read.csv("C:/Users/death/Desktop/Dissertation Coding/Copied versions/wdr5_vs_N2_YA(1).csv")
+View(Dataset10)
+colnames(Dataset10) [1] = "WBGene_UID"
+Dataset10 <- subset(Dataset10, select = -c(description))
+#Dataset11 and 12 are Downregulated and Upregulated genes
+Dataset11 = Dataset10[Dataset10$log2FoldChange < 0,]
+Dataset12 = Dataset10[Dataset10$log2FoldChange > 0,]
+
+
+#Too many Up values compared to down, need to be stricter on the up and less strict on the down
+
+#Dataset1
+#rbbp5_vs_N2_emb_Up
+Adjusted_rbbp5_vs_N2_emb_Up <- Dataset1[Dataset1$log2FoldChange >2 & Dataset1$pval <0.01,]
+#rbbp5_vs_N2_emb_Down
+Adjusted_rbbp5_vs_N2_emb_Down <- Dataset1[Dataset1$log2FoldChange <(-1) & Dataset1$pval <0.01,]
+
+#Dataset4
+#Fixing N/A issue
+Dataset4 <- Dataset4[-(18801:19093),]
+#rbbp5_vs_N2_YA_Up
+Adjusted_rbbp5_vs_N2_YA_Up <- Dataset4[Dataset4$log2FoldChange >2 & Dataset4$pval <0.01,]
+#rbbp5_vs_N2_YA_Down
+Adjusted_rbbp5_vs_N2_YA_Down <- Dataset4[Dataset4$log2FoldChange <(-1) & Dataset4$pval <0.01,]
+
+#Dataset7
+#wdr5_vs_N2_emb_Up
+Adjusted_wdr5_vs_N2_emb_Up <- Dataset7[Dataset7$log2FoldChange >2 & Dataset7$pval <0.01,]
+#wdr5_vs_N2_emb_Down
+Adjusted_wdr5_vs_N2_emb_Down <- Dataset7[Dataset7$log2FoldChange <(-1) & Dataset7$pval <0.01,]
+
+#Dataset10
+#Fixing N/A issue
+Dataset10 <- Dataset10[-(18355:19093),]
+#wdr5_vs_N2_YA_Up
+Adjusted_wdr5_vs_N2_YA_Up <- Dataset10[Dataset10$log2FoldChange >2 & Dataset10$pval <0.01,]
+#wdr5_vs_N2_YA_Down
+Adjusted_wdr5_vs_N2_YA_Down <- Dataset10[Dataset10$log2FoldChange <(-1) & Dataset10$pval <0.01,]
+
+
+
+  ##Final Volcano Plots
+
+
+##gene counts:
+count_data_Dataset1 <- data.frame(label = c("Up", "Down"),
+                                  count = c(sum(Dataset1$diffexpressed == "Up"), sum(Dataset1$diffexpressed == "Down")),
+                                  diffexpressed = c("Up", "Down"))
+#Volcano_rbbp5_vs_N2_emb:
+Dataset1$diffexpressed <- "NS"
+Dataset1$diffexpressed[Dataset1$log2FoldChange>2 & Dataset1$pval<0.01] <- "Up"
+Dataset1$diffexpressed[Dataset1$log2FoldChange<(-1) & Dataset1$pval<0.01] <- "Down"
+Volcano_rbbp5_vs_N2_emb <- ggplot(data = Dataset1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 2), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  ylim(0,15) + 
+  xlim(-5,5) +
+  annotate("text", x = 3.5, y = 14.5,label = c("Down: 108","Up: 626"), 
+           vjust = c(1,-0.2), hjust = 0, size = 4.5, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "RBBP5 Embryo Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.title = element_blank(),legend.text = element_blank()) +
+  guides(col = guide_legend(override.aes = list(shape = 16))) +
+  scale_colour_manual(values = c("Up" = "red", "NS" = "grey", "Down" = "blue"))
+print(Volcano_rbbp5_vs_N2_emb)
+
+Volcano_rbbp5_vs_N2_emb_FC1 <- ggplot(data = Dataset1_FC1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 1), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  ylim(0,30) + 
+  xlim(-5,5) +
+  annotate("text", x = 3.5, y = 25,label = c("Down: 108","Up: 1453"), 
+           vjust = c(1,-0.2), hjust = 0, size = 4.5, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "RBBP5 Embryo Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") +
+  guides(col = guide_legend(override.aes = list(shape = 16))) +
+  scale_colour_manual(values = c("Up" = "red", "NS" = "grey", "Down" = "blue"))
+print(Volcano_rbbp5_vs_N2_emb_FC1)
+
+#Volcano_rbbp5_vs_N2_YA:
+Dataset4$diffexpressed <- "NS"
+Dataset4$diffexpressed[Dataset4$log2FoldChange>2 & Dataset4$pval<0.01] <- "Up"
+Dataset4$diffexpressed[Dataset4$log2FoldChange<(-1) & Dataset4$pval<0.01] <- "Down"
+count_data_Dataset4 <- data.frame(label = c("Up", "Down"),
+                                  count = c(sum(Dataset4$diffexpressed == "Up"), sum(Dataset4$diffexpressed == "Down")),
+                                  diffexpressed = c("Up", "Down"))
+
+Volcano_rbbp5_vs_N2_YA <- ggplot(data = Dataset4, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 2), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) +
+  xlim(-7,10) + 
+  ylim(0,55) +
+  annotate("text", x = 8.5, y = 53,label = c("Down: 695","Up: 1315"), 
+           vjust = c(1,-0.2), hjust = 0, size = 3.6, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "RBBP5 Young Adult Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.title = element_blank(),legend.text = element_text(size = 12)) +
+  guides(col = guide_legend(override.aes = list(shape = 16))) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_rbbp5_vs_N2_YA)
+
+Volcano_rbbp5_vs_N2_YA_FC1 <- ggplot(data = Dataset4_FC1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 1), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) +
+  xlim(-5,5) + 
+  ylim(0,30) +
+  annotate("text", x = 2.7, y = 30,label = c("Down: 695","Up: 2276"), 
+           vjust = c(1,-0.2), hjust = 0, size = 4.5, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "RBBP5 Young Adult Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_rbbp5_vs_N2_YA_FC1)
+
+#Volcano_wdr5_vs_N2_emb:
+Dataset7$diffexpressed <- "NS"
+Dataset7$diffexpressed[Dataset7$log2FoldChange>2 & Dataset7$pval<0.01] <- "Up"
+Dataset7$diffexpressed[Dataset7$log2FoldChange<(-1) & Dataset7$pval<0.01] <- "Down"
+count_data_Dataset7 <- data.frame(label = c("Up", "Down"),
+                                  count = c(sum(Dataset7$diffexpressed == "Up"), sum(Dataset7$diffexpressed == "Down")),
+                                  diffexpressed = c("Up", "Down"))
+
+Volcano_wdr5_vs_N2_emb <- ggplot(data = Dataset7, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 2), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  xlim(-10,10) + 
+  ylim(0,30) + 
+  annotate("text", x = 8, y = 28,label = c("Down: 1147","Up: 1392"), 
+           vjust = c(1,-0.2), hjust = 0, size = 3.6, colour = c("blue", "red"))+  
+  theme_classic() +
+  labs(title = "WDR5 Embryo Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.title = element_blank(),legend.text = element_text(size = 12)) +
+  guides(col = guide_legend(override.aes = list(shape = 16))) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_wdr5_vs_N2_emb)
+
+Volcano_wdr5_vs_N2_emb_FC1 <- ggplot(data = Dataset7_FC1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 1), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  xlim(-5,5) + 
+  ylim(0,30) + 
+  annotate("text", x = 3.5, y = 26.5,label = c("Down: 1147","Up: 2973"), 
+           vjust = c(1,-0.2), hjust = 0, size = 4.5, colour = c("blue", "red"))+  
+  theme_classic() +
+  labs(title = "WDR5 Embryo Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_wdr5_vs_N2_emb_FC1)
+
+#Volcano_wdr5_vs_N2_YA:
+Dataset10$diffexpressed <- "NS"
+Dataset10$diffexpressed[Dataset10$log2FoldChange>2 & Dataset10$pval<0.01] <- "Up"
+Dataset10$diffexpressed[Dataset10$log2FoldChange<(-1) & Dataset10$pval<0.01] <- "Down"
+count_data_Dataset10 <- data.frame(label = c("Up", "Down"),
+                                  count = c(sum(Dataset10$diffexpressed == "Up"), sum(Dataset10$diffexpressed == "Down")),
+                                  diffexpressed = c("Up", "Down"))
+
+Volcano_wdr5_vs_N2_YA <- ggplot(data = Dataset10, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 2), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  ylim(0,60) +
+  annotate("text", x = 10.5, y = 57,label = c("Down: 302","Up: 502"), 
+           vjust = c(1,-0.2), hjust = 0, size = 3.6, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "WDR5 Young Adult Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.title = element_blank(),legend.text = element_text(size = 12)) +
+  guides(col = guide_legend(override.aes = list(shape = 16))) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_wdr5_vs_N2_YA)
+
+Volcano_wdr5_vs_N2_YA_FC1 <- ggplot(data = Dataset10_FC1, aes(x=log2FoldChange, y = -log10(pval), col=diffexpressed)) + 
+  geom_vline(xintercept=c(-1, 1), col="grey", linetype="dashed") + 
+  geom_hline(yintercept=-log10(0.01), col="grey", linetype="dashed") + 
+  geom_point(size=1) + 
+  ylim(0,30) +
+  xlim(-5,5) +
+  annotate("text", x = 3.5, y = 30,label = c("Down: 302","Up: 873"), 
+           vjust = c(1,-0.2), hjust = 0, size = 3.6, colour = c("blue", "red"))+
+  theme_classic() +
+  labs(title = "WDR5 Young Adult Volcano Plot", x = "log2 Fold Change", y = "-log10 P Value") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Volcano_wdr5_vs_N2_YA_FC1)
+
+
+
+#WT expression vs log2FC MA Plot:
+
+Dataset1_FC1 = Dataset1
+Dataset1_FC1$diffexpressed <- "NS"
+Dataset1_FC1$diffexpressed[Dataset1_FC1$log2FoldChange>1 & Dataset1_FC1$pval<0.01] <- "Up"
+Dataset1_FC1$diffexpressed[Dataset1_FC1$log2FoldChange<(-1) & Dataset1_FC1$pval<0.01] <- "Down"
+MA_Plot_RBBP5_emb_FC1 <- ggplot(Dataset1_FC1, aes(log2(pmax(baseMean_N2, 1)),log2FoldChange, colour=diffexpressed)) + 
+  scale_colour_manual(values=c("blue", "grey", "red")) + 
+  geom_point() +
+  xlim(0,21) +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryro MA Plot", x = "log2 Wild Type Expression", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none")
+print(MA_Plot_RBBP5_emb_FC1)
+
+Dataset4_FC1 = Dataset4
+Dataset4_FC1$diffexpressed <- "NS"
+Dataset4_FC1$diffexpressed[Dataset4_FC1$log2FoldChange>1 & Dataset4_FC1$pval<0.01] <- "Up"
+Dataset4_FC1$diffexpressed[Dataset4_FC1$log2FoldChange<(-1) & Dataset4_FC1$pval<0.01] <- "Down"
+MA_Plot_RBBP5_YA_FC1 <- ggplot(Dataset4_FC1, aes(log2(pmax(baseMean, 1)),log2FoldChange, colour=diffexpressed)) + 
+  scale_colour_manual(values=c("blue", "grey", "red")) + 
+  geom_point() +
+  xlim(0,21) +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult MA Plot", x = "log2 Wild Type Expression", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") 
+print(MA_Plot_RBBP5_YA_FC1)
+
+
+Dataset7_FC1 = Dataset7
+Dataset7_FC1$diffexpressed <- "NS"
+Dataset7_FC1$diffexpressed[Dataset7_FC1$log2FoldChange>1 & Dataset7_FC1$pval<0.01] <- "Up"
+Dataset7_FC1$diffexpressed[Dataset7_FC1$log2FoldChange<(-1) & Dataset7_FC1$pval<0.01] <- "Down"
+MA_Plot_WDR5_emb_FC1 <- ggplot(Dataset7_FC1, aes(log2(pmax(baseMean_N2, 1)),log2FoldChange, colour=diffexpressed)) + 
+  scale_colour_manual(values=c("blue", "grey", "red")) + 
+  geom_point() +
+  xlim(0,21) +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo MA Plot", x = "log2 Wild Type Expression", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none") 
+print(MA_Plot_WDR5_emb_FC1)
+
+Dataset10_FC1 = Dataset10
+Dataset10_FC1$diffexpressed <- "NS"
+Dataset10_FC1$diffexpressed[Dataset10_FC1$log2FoldChange>1 & Dataset10_FC1$pval<0.01] <- "Up"
+Dataset10_FC1$diffexpressed[Dataset10_FC1$log2FoldChange<(-1) & Dataset10_FC1$pval<0.01] <- "Down"
+MA_Plot_WDR5_YA_FC1 <- ggplot(Dataset10_FC1, aes(log2(pmax(baseMean, 1)),log2FoldChange, colour=diffexpressed)) + 
+  scale_colour_manual(values=c("blue", "grey", "red")) + 
+  geom_point() +
+  xlim(0,21) +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult MA Plot", x = "log2 Wild Type Expression", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 12), axis.text = element_text(size = 12),
+        legend.position = "none")
+print(MA_Plot_WDR5_YA_FC1)
+
+
+#Violin Plots:
+Dataset1_BnW <- subset(Dataset1_FC1, diffexpressed != "NS")
+
+Violin_BnW_rbbp5_vs_N2_emb <- ggplot(data = Dataset1_BnW, aes(x = diffexpressed, y = log2(pmax(baseMean_N2, 1)))) +
+  geom_violin(fill = "lightblue", color = "black", width = 0.4) +
+  geom_boxplot(width = 0.05, outlier.shape = NA, position = position_nudge(0), fill = "darkred", color = "black") +
+  geom_jitter(shape = 16, size = 0.8, position = position_jitter(0.25), alpha = 0.5, color = "darkblue") +
+  ylim(0,15.5) +
+  labs(title = "RBBP5 Embryo Violin and Box and Whisker Plots",y = "log2 WT Expression", x = element_blank()) +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 16), axis.text = element_text(size = 14)) +
+  theme_classic()
+
+print(Violin_BnW_rbbp5_vs_N2_emb)
+
+Dataset4_BnW <- subset(Dataset4_FC1, diffexpressed != "NS")
+
+Violin_BnW_rbbp5_vs_N2_YA <- ggplot(data = Dataset4_BnW, aes(x = diffexpressed, y = log2(pmax(baseMean, 1)))) +
+  geom_violin(fill = "lightblue", color = "black", width = 0.4) +
+  geom_boxplot(width = 0.05, outlier.shape = NA, position = position_nudge(0), fill = "darkred", color = "black") +
+  geom_jitter(shape = 16, size = 0.8, position = position_jitter(0.25), alpha = 0.4, color = "darkblue") +
+  labs(title = "RBBP5 Young Adult Violin and Box and Whisker Plots",y = "log2 WT Expression", x = element_blank()) +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 16), axis.text = element_text(size = 14)) +
+  theme_classic()
+
+print(Violin_BnW_rbbp5_vs_N2_YA)
+
+Dataset7_BnW <- subset(Dataset7_FC1, diffexpressed != "NS")
+
+Violin_BnW_wdr5_vs_N2_emb <- ggplot(data = Dataset7_BnW, aes(x = diffexpressed, y = log2(pmax(baseMean_N2, 1)))) +
+  geom_violin(fill = "lightblue", color = "black", width = 0.4) +
+  geom_boxplot(width = 0.05, outlier.shape = NA, position = position_nudge(0), fill = "darkred", color = "black") +
+  geom_jitter(shape = 16, size = 0.8, position = position_jitter(0.3), alpha = 0.5, color = "darkblue") +
+  labs(title = "WDR5 Embryo Violin and Box and Whisker Plots",y = "log2 WT Expression", x = element_blank()) +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 16), axis.text = element_text(size = 14)) +
+  theme_classic()
+
+print(Violin_BnW_wdr5_vs_N2_emb)
+
+Dataset10_BnW <- subset(Dataset10_FC1, diffexpressed != "NS")
+
+Violin_BnW_wdr5_vs_N2_YA <- ggplot(data = Dataset10_BnW, aes(x = diffexpressed, y = log2(pmax(baseMean, 1)))) +
+  geom_violin(fill = "lightblue", color = "black", width = 0.4) +
+  geom_boxplot(width = 0.05, outlier.shape = NA, position = position_nudge(0), fill = "darkred", color = "black") +
+  geom_jitter(shape = 16, size = 0.8, position = position_jitter(0.2), alpha = 0.5, color = "darkblue") +
+  labs(title = "WDR5 Young Adult Violin and Box and Whisker Plots",y = "log2 WT Expression", x = element_blank()) +
+  theme(plot.title = element_text(size = 18, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 16), axis.text = element_text(size = 14)) +
+  theme_classic()
+
+print(Violin_BnW_wdr5_vs_N2_YA)
+
+
+##Expected number of genes vs actual calculation:
+#rbbp5_YA_Down and wdr5_YA_Down:
+695/18800
+302/18800
+0.0367*0.0161*18800
+# 11 genes expected
+# 66 genes actual
+
+#rbbp5_YA_Up and wdr5_YA_Up:
+1315/18800
+502/18800
+0.0699*0.0267*18800
+# 35 genes expected
+# 321 genes actual
+
+#rbbp5_emb_Down and wdr5_emb_Down:
+108/17009
+1147/17009
+0.00635*0.0674*17009
+# 7 genes expected
+# 33 genes actual
+
+#rbbp5_emb_Up and wdr5_emb_Up:
+626/17009
+1392/17009
+0.0368*0.0818*17009
+# 51 genes expected
+# 309 genes actual
+51/rbbp5_emb_Up total + wdr5_emb_Up total *100 = expected % overlap
+
+
+##Private Gene Ontology:
+Private_Genontology_RB_emb_Down <- read.csv("C:/Users/death/Dropbox/UG Bioinformatics 2023_24/Jacob Parker/R Files/Tasks/Gene Ontology/Private gene analysis/Private Gene lists and descriptions/RB_emb_Down.csv")
+# First thing to note: wdr5 emb mutants have more private genes than rbbp5 emb for Up and Down 
+# BUT this is inverted for YA
+
+#WDR5 emb Up -> Lots of stress response genes and RMS genes Up regulated
+#WDR emb Down -> lots of Transcription genes, TF genes, mRNA function genes and DNA replication/T genes
+#RB emb Down has no mRNA (YA has misregulated mRNA genes), Transcription or DNA and only NHRs for TF genes
+#Lots of Ribosome related down regulated genes for RB YA
+
+#Some germline development genes Down Reg. in wdr5 emb and "Major Sperm Protein" genes down reg in YA
+
+
+#Does H3K4me act in transcription termination or initiation?
+#Chromosome segregation Dataset 1
+Chr1_Dataset1 <- Dataset1[Dataset1$chrom == "chrI",]
+Chr2_Dataset1 <- Dataset1[Dataset1$chrom == "chrII",]
+Chr3_Dataset1 <- Dataset1[Dataset1$chrom == "chrIII",]
+Chr4_Dataset1 <- Dataset1[Dataset1$chrom == "chrIV",]
+Chr5_Dataset1 <- Dataset1[Dataset1$chrom == "chrV",]
+ChrX_Dataset1 <- Dataset1[Dataset1$chrom == "chrX",]
+
+Chromosome1_Dataset1_Graph_Col <- ggplot(Chr1_Dataset1, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset1_Graph_Col)
+
+Chromosome1_Dataset1_Graph_WT <- ggplot(Chr1_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset1_Graph_WT)
+
+Chromosome2_Dataset1_Graph <- ggplot(Chr2_Dataset1, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset1_Graph)
+
+Chromosome2_Dataset1_Graph_WT <- ggplot(Chr2_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset1_Graph_WT)
+
+Chromosome3_Dataset1_Graph <- ggplot(Chr3_Dataset1, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset1_Graph)
+
+Chromosome3_Dataset1_Graph_WT <- ggplot(Chr3_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset1_Graph_WT)
+
+Chromosome4_Dataset1_Graph <- ggplot(Chr4_Dataset1, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset1_Graph)
+
+Chromosome4_Dataset1_Graph_WT <- ggplot(Chr4_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset1_Graph_WT)
+
+Chromosome5_Dataset1_Graph <- ggplot(Chr5_Dataset1, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset1_Graph)
+
+Chromosome5_Dataset1_Graph_WT <- ggplot(Chr5_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset1_Graph_WT)
+
+ChromosomeX_Dataset1_Graph <- ggplot(ChrX_Dataset1, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome X", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset1_Graph)
+
+ChromosomeX_Dataset1_Graph_WT <- ggplot(ChrX_Dataset1, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome X", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset1_Graph_WT)
+
+#Dataset4
+Chr1_Dataset4 <- Dataset4[Dataset4$chrom == "chrI",]
+Chr2_Dataset4 <- Dataset4[Dataset4$chrom == "chrII",]
+Chr3_Dataset4 <- Dataset4[Dataset4$chrom == "chrIII" & Dataset4$diffexpressed != "NS", ]
+Chr4_Dataset4 <- Dataset4[Dataset4$chrom == "chrIV",]
+Chr5_Dataset4 <- Dataset4[Dataset4$chrom == "chrV",]
+ChrX_Dataset4 <- Dataset4[Dataset4$chrom == "chrX",]
+
+Chromosome1_Dataset4_Graph_Col <- ggplot(Chr1_Dataset4, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset4_Graph_Col)
+
+Chromosome1_Dataset4_Graph_WT <- ggplot(Chr1_Dataset4, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset4_Graph_WT)
+
+Chromosome2_Dataset4_Graph <- ggplot(Chr2_Dataset4, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young adult Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset4_Graph)
+
+Chromosome2_Dataset4_Graph_WT <- ggplot(Chr2_Dataset4, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset4_Graph_WT)
+
+Chromosome3_Dataset4_Graph <- ggplot(Chr3_Dataset4, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young adult Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "red"))
+print(Chromosome3_Dataset4_Graph)
+
+Chromosome3_Dataset4_Graph_WT <- ggplot(Chr3_Dataset4, aes(x = start, y = log2(pmax(baseMean,1)), colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "red")) 
+print(Chromosome3_Dataset4_Graph_WT)
+
+Chromosome4_Dataset4_Graph <- ggplot(Chr4_Dataset4, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young adult Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset4_Graph)
+
+Chromosome4_Dataset4_Graph_WT <- ggplot(Chr4_Dataset4, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset4_Graph_WT)
+
+Chromosome5_Dataset4_Graph <- ggplot(Chr5_Dataset4, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young adult Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset4_Graph)
+
+Chromosome5_Dataset4_Graph_WT <- ggplot(Chr5_Dataset4, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset4_Graph_WT)
+
+ChromosomeX_Dataset4_Graph <- ggplot(ChrX_Dataset4, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "RBBP5 Young adult Chromosome Clustering Plot", x = "Position on Chromosome X", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset4_Graph)
+
+ChromosomeX_Dataset4_Graph_WT <- ggplot(ChrX_Dataset4, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "RBBP5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome X", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset4_Graph_WT)
+
+#Chromosome segregation Dataset 7:
+Chr1_Dataset7 <- Dataset7[Dataset7$chrom == "chrI",]
+Chr2_Dataset7 <- Dataset7[Dataset7$chrom == "chrII",]
+Chr3_Dataset7 <- Dataset7[Dataset7$chrom == "chrIII",]
+Chr4_Dataset7 <- Dataset7[Dataset7$chrom == "chrIV",]
+Chr5_Dataset7 <- Dataset7[Dataset7$chrom == "chrV",]
+ChrX_Dataset7 <- Dataset7[Dataset7$chrom == "chrX",]
+
+Chromosome1_Dataset7_Graph_Col <- ggplot(Chr1_Dataset7, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset7_Graph_Col)
+
+Chromosome1_Dataset7_Graph_WT <- ggplot(Chr1_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset7_Graph_WT)
+
+Chromosome2_Dataset7_Graph <- ggplot(Chr2_Dataset7, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset7_Graph)
+
+Chromosome2_Dataset7_Graph_WT <- ggplot(Chr2_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset7_Graph_WT)
+
+Chromosome3_Dataset7_Graph <- ggplot(Chr3_Dataset7, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset7_Graph)
+
+Chromosome3_Dataset7_Graph_WT <- ggplot(Chr3_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset7_Graph_WT)
+
+Chromosome4_Dataset7_Graph <- ggplot(Chr4_Dataset7, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset7_Graph)
+
+Chromosome4_Dataset7_Graph_WT <- ggplot(Chr4_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset7_Graph_WT)
+
+
+Chromosome5_Dataset7_Graph <- ggplot(Chr5_Dataset7, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset7_Graph)
+
+Chromosome5_Dataset7_Graph_WT <- ggplot(Chr5_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset7_Graph_WT)
+
+
+ChromosomeX_Dataset7_Graph <- ggplot(ChrX_Dataset7, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome X", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset7_Graph)
+
+ChromosomeX_Dataset7_Graph_WT <- ggplot(ChrX_Dataset7, aes(x = start, y = baseMean_N2, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Embryo Chromosome Clustering Plot", x = "Position on Chromosome X", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset7_Graph_WT)
+
+
+#Chromosome segregation Dataset 1
+Chr1_Dataset10 <- Dataset10[Dataset10$chrom == "chrI",]
+Chr2_Dataset10 <- Dataset10[Dataset10$chrom == "chrII",]
+Chr3_Dataset10 <- Dataset10[Dataset10$chrom == "chrIII",]
+Chr4_Dataset10 <- Dataset10[Dataset10$chrom == "chrIV",]
+Chr5_Dataset10 <- Dataset10[Dataset10$chrom == "chrV",]
+ChrX_Dataset10 <- Dataset10[Dataset10$chrom == "chrX",]
+
+Chromosome1_Dataset10_Graph_Col <- ggplot(Chr1_Dataset10, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset10_Graph_Col)
+
+Chromosome1_Dataset10_Graph_WT <- ggplot(Chr1_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 1", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome1_Dataset10_Graph_WT)
+
+Chromosome2_Dataset10_Graph <- ggplot(Chr2_Dataset10, aes(x = start, y = log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset10_Graph)
+
+Chromosome2_Dataset10_Graph_WT <- ggplot(Chr2_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 2", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome2_Dataset10_Graph_WT)
+
+Chromosome3_Dataset10_Graph <- ggplot(Chr3_Dataset10, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset10_Graph)
+
+Chromosome3_Dataset10_Graph_WT <- ggplot(Chr3_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 3", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome3_Dataset10_Graph_WT)
+
+Chromosome4_Dataset10_Graph <- ggplot(Chr4_Dataset10, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset10_Graph)
+
+Chromosome4_Dataset10_Graph_WT <- ggplot(Chr4_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 4", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome4_Dataset10_Graph_WT)
+
+Chromosome5_Dataset10_Graph <- ggplot(Chr5_Dataset10, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset10_Graph)
+
+Chromosome5_Dataset10_Graph_WT <- ggplot(Chr5_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome 5", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(Chromosome5_Dataset10_Graph_WT)
+
+ChromosomeX_Dataset10_Graph <- ggplot(ChrX_Dataset10, aes(start, log2FoldChange, colour = diffexpressed))+
+  geom_col()+
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome X", y = "log2 Fold Change") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset10_Graph)
+
+ChromosomeX_Dataset10_Graph_WT <- ggplot(ChrX_Dataset10, aes(x = start, y = baseMean, colour = diffexpressed))+
+  geom_col() +
+  theme_classic() + 
+  labs(title = "WDR5 Young Adult Chromosome Clustering Plot", x = "Position on Chromosome X", y = "WT Expression") +
+  theme(plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
+        axis.title = element_text(size = 8), axis.text = element_text(size = 8),
+        legend.title = element_blank(),legend.text = element_text(size = 6)) +
+  scale_colour_manual(values=c("blue", "grey", "red"))
+print(ChromosomeX_Dataset10_Graph_WT)
+
+
+Genontology_Combined <- rbind(Genontology_rbbp5_vs_N2_emb_Down, Genontology_rbbp5_vs_N2_emb_Up, 
+                              Genontology_rbbp5_vs_N2_YA_Down, Genontology_rbbp5_vs_N2_YA_Up, 
+                              Genontology_wdr5_vs_N2_emb_Down, Genontology_wdr5_vs_N2_emb_Up, 
+                              Genontology_wdr5_vs_N2_YA_Down, Genontology_wdr5_vs_N2_YA_Up)
+
+Genontology_rbbp5_vs_N2_emb_Down$OG.Dataset = "RB emb down"
+Genontology_rbbp5_vs_N2_emb_Up$OG.Dataset = "RB emb up"
+Genontology_rbbp5_vs_N2_YA_Down$OG.Dataset = "RB YA down"
+Genontology_rbbp5_vs_N2_YA_Up$OG.Dataset = "RB YA up"
+Genontology_wdr5_vs_N2_emb_Down$OG.Dataset = "WD emb down"
+Genontology_wdr5_vs_N2_emb_Up$OG.Dataset = "WD emb up"
+Genontology_wdr5_vs_N2_YA_Down$OG.Dataset = "WD YA down"
+Genontology_wdr5_vs_N2_YA_Up$OG.Dataset = "WD YA up"
+
+########################################################################
+#Unused Code:
+#Heatmaps:
+#Making a combined Dataset
+Dataset1$OGDataset <- "rbbp5_vs_N2_emb"
+Dataset4$OGDataset <- "rbbp5_vs_N2_YA"
+Dataset7$OGDataset <- "wdr5_vs_N2_emb"
+Dataset10$OGDataset <- "wdr5_vs_N2_YA"
+
+#labelling original dataset for each point so it can be differentiated in heatmap
+rbbp5_vs_N2_emb_Down_log2FoldChange1_pval0.05$OGDataset <- "rbbp5_vs_N2_emb"
+rbbp5_vs_N2_emb_Up_log2FoldChange1_pval0.05$OGDataset <- "rbbp5_vs_N2_emb"
+rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001$OGDataset <- "rbbp5_vs_N2_YA"
+rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001$OGDataset <- "rbbp5_vs_N2_YA"
+wdr5_vs_N2_emb_Down_log2FoldChange1_pval0.0001$OGDataset <- "wdr5_vs_N2_emb"
+wdr5_vs_N2_emb_Up_log2FoldChange1_pval0.0001$OGDataset <- "wdr5_vs_N2_emb"
+wdr5_vs_N2_YA_Down_log2FoldChange1_pval0.05$OGDataset <- "wdr5_vs_N2_YA"
+wdr5_vs_N2_YA_Up_log2FoldChange1_pval0.05$OGDataset <- "wdr5_vs_N2_YA"
+
+#Making all the columns the exact same and fewer columns to combine
+rbbp5_vs_N2_emb_Down_log2FoldChange1_pval0.05 = subset(rbbp5_vs_N2_emb_Down_log2FoldChange1_pval0.05, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,baseMean_N2,baseMean_RBBP5,foldChange,diffexpressed))
+rbbp5_vs_N2_emb_Up_log2FoldChange1_pval0.05 = subset(rbbp5_vs_N2_emb_Up_log2FoldChange1_pval0.05, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,baseMean_N2,baseMean_RBBP5,foldChange,diffexpressed))
+rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001 = subset(rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean))
+rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001 = subset(rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean))
+
+wdr5_vs_N2_emb_Down_log2FoldChange1_pval0.0001 = subset(wdr5_vs_N2_emb_Down_log2FoldChange1_pval0.0001, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,baseMean_N2,baseMean_WDR5,foldChange,diffexpressed))
+wdr5_vs_N2_emb_Up_log2FoldChange1_pval0.0001 = subset(wdr5_vs_N2_emb_Up_log2FoldChange1_pval0.0001, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,baseMean_N2,baseMean_WDR5,foldChange,diffexpressed))
+wdr5_vs_N2_YA_Up_log2FoldChange1_pval0.05 = subset(wdr5_vs_N2_YA_Up_log2FoldChange1_pval0.05, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+wdr5_vs_N2_YA_Down_log2FoldChange1_pval0.05 = subset(wdr5_vs_N2_YA_Down_log2FoldChange1_pval0.05, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+
+colnames(rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001) [1] = "WBGene_UID"
+colnames(rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001) [3] = "pval"
+colnames(rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001) [1] = "WBGene_UID"
+colnames(rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001) [3] = "pval"
+
+#Combining into 1 Dataframe
+CombinedDataset = data.frame()
+CombinedDataset <- rbind(rbbp5_vs_N2_emb_Down_log2FoldChange1_pval0.05, rbbp5_vs_N2_emb_Up_log2FoldChange1_pval0.05,
+                         rbbp5_vs_N2_YA_Down_log2FoldChange1_pval0.001,rbbp5_vs_N2_YA_Up_log2FoldChange1_pval0.001,
+                         wdr5_vs_N2_emb_Down_log2FoldChange1_pval0.0001,wdr5_vs_N2_emb_Up_log2FoldChange1_pval0.0001,
+                         wdr5_vs_N2_YA_Down_log2FoldChange1_pval0.05,wdr5_vs_N2_YA_Up_log2FoldChange1_pval0.05)
+
+#making heatmap from combined datasets
+ggplot(CombinedDataset, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+Heatmap <-ggplot(CombinedDataset, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + geom_tile() + scale_fill_gradient(low="blue", high="red")
+
+#Most differentially expressed for each sample (Up and Down) ~150 up and 150 down
+StrictCombinedDataset = data.frame()
+StrictCombinedDataset <- data.frame(CombinedDataset [CombinedDataset$log2FoldChange<(-2.5) | CombinedDataset$log2FoldChange>6.8,]) 
+
+ggplot(StrictCombinedDataset, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+Strict_Heatmap <-ggplot(StrictCombinedDataset, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + geom_tile() + scale_fill_gradient(low="blue", high="red") + theme_classic() + labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+#Most significant changes occurring in wrd5 YA (around 165 are from that dataset)
+
+ggplot(StrictCombinedDataset, aes(chrom, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+Chromosome_Strict_Heatmap <- ggplot(StrictCombinedDataset, aes(chrom, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+#Largest number of significant changes on Chromosome 5
+
+#Identifying genes that are differentially expressed in more than 1 dataset
+Duplicated_Genes <- StrictCombinedDataset$WBGene_UID[duplicated(StrictCombinedDataset$WBGene_UID)]
+print(Duplicated_Genes)
+
+#Function to print full rows of duplicated genes from Strict_Combined_Dataset
+print(StrictCombinedDataset[StrictCombinedDataset$WBGene_UID == "WBGene00010212",])
+
+##Making all the columns the exact same and fewer columns to combine into Adjusted_Combined_Dataset
+Adjusted_rbbp5_vs_N2_emb_Down = subset(Adjusted_rbbp5_vs_N2_emb_Down, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,baseMean_N2,baseMean_RBBP5,foldChange,diffexpressed))
+Adjusted_rbbp5_vs_N2_emb_Up = subset(Adjusted_rbbp5_vs_N2_emb_Up, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,baseMean_N2,baseMean_RBBP5,foldChange,diffexpressed))
+Adjusted_rbbp5_vs_N2_YA_Down = subset(Adjusted_rbbp5_vs_N2_YA_Down, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+Adjusted_rbbp5_vs_N2_YA_Up = subset(Adjusted_rbbp5_vs_N2_YA_Up, select = -c(N_1,N_2,N_3,R_1,R_2,R_3,N_1.1,N_2.1,N_3.1,R_1.1,R_2.1,R_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+
+Adjusted_wdr5_vs_N2_emb_Down = subset(Adjusted_wdr5_vs_N2_emb_Down, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,baseMean_N2,baseMean_WDR5,foldChange,diffexpressed))
+Adjusted_wdr5_vs_N2_emb_Up = subset(Adjusted_wdr5_vs_N2_emb_Up, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,baseMean_N2,baseMean_WDR5,foldChange,diffexpressed))
+Adjusted_wdr5_vs_N2_YA_Up = subset(Adjusted_wdr5_vs_N2_YA_Up, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+Adjusted_wdr5_vs_N2_YA_Down = subset(Adjusted_wdr5_vs_N2_YA_Down, select = -c(N_1,N_2,N_3,W_1,W_2,W_3,N_1.1,N_2.1,N_3.1,W_1.1,W_2.1,W_3.1,gene_name,length,stat,lfcSE,meanA,meanB,baseMean,diffexpressed))
+
+colnames(Adjusted_rbbp5_vs_N2_YA_Up) [1] = "WBGene_UID"
+colnames(Adjusted_rbbp5_vs_N2_YA_Up) [3] = "pval"
+colnames(Adjusted_rbbp5_vs_N2_YA_Down) [1] = "WBGene_UID"
+colnames(Adjusted_rbbp5_vs_N2_YA_Down) [3] = "pval"
+
+#Making Adjusted_Combined_Dataset_Up
+Adjusted_Combined_Dataset_Up = data.frame()
+Adjusted_Combined_Dataset_Up <- rbind(Adjusted_rbbp5_vs_N2_emb_Up, Adjusted_rbbp5_vs_N2_YA_Up, 
+                                      Adjusted_wdr5_vs_N2_emb_Up, Adjusted_wdr5_vs_N2_YA_Up)
+
+#Making Adjusted_Combined_Dataset_Down
+Adjusted_Combined_Dataset_Down = data.frame()
+Adjusted_Combined_Dataset_Down <- rbind(Adjusted_rbbp5_vs_N2_emb_Down, Adjusted_rbbp5_vs_N2_YA_Down,
+                                        Adjusted_wdr5_vs_N2_emb_Down, Adjusted_wdr5_vs_N2_YA_Down)
+
+
+#Heatmap_Adjusted_Combined_Dataset_Up
+ggplot(Adjusted_Combined_Dataset_Up, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+Heatmap_Adjusted_Combined_Dataset_Up <-ggplot(Adjusted_Combined_Dataset_Up, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+
+#Heatmap_Adjusted_Combined_Dataset_Down
+ggplot(Adjusted_Combined_Dataset_Down, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="turquoise") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+Heatmap_Adjusted_Combined_Dataset_Down <-ggplot(Adjusted_Combined_Dataset_Down, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="blue", high="turquoise") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+#Needs some work
+
+#No clusters of genes evident so trying to find some
+#Identifying genes that are differentially expressed in more than 1 dataset
+Duplicated_Genes_Down <- Adjusted_Combined_Dataset_Down[duplicated(Adjusted_Combined_Dataset_Down$WBGene_UID) | duplicated(Adjusted_Combined_Dataset_Down$WBGene_UID, fromLast = TRUE),]
+print(Duplicated_Genes_Down)
+#fromLast = TRUE means it counts all of the duplicate copies as duplicates, if its FALSE then it doesn't count the 1st one as a duplicate
+Duplicated_Genes_emb_Down = Duplicated_Genes_Down[Duplicated_Genes_Down$OGDataset == "rbbp5_vs_N2_emb" | Duplicated_Genes_Down$OGDataset == "wdr5_vs_N2_emb" ,]
+Duplicated_Genes_YA_Down = Duplicated_Genes_Down[Duplicated_Genes_Down$OGDataset == "rbbp5_vs_N2_YA" | Duplicated_Genes_Down$OGDataset == "wdr5_vs_N2_YA" ,]
+
+#Duplicated Genes Up for the Up heatmaps
+Duplicated_Genes_Up <- Adjusted_Combined_Dataset_Up[duplicated(Adjusted_Combined_Dataset_Up$WBGene_UID) | duplicated(Adjusted_Combined_Dataset_Up$WBGene_UID, fromLast = TRUE),]
+
+Duplicated_Genes_emb_Up = Duplicated_Genes_Up[Duplicated_Genes_Up$OGDataset == "rbbp5_vs_N2_emb" | Duplicated_Genes_Up$OGDataset == "wdr5_vs_N2_emb" ,]
+Duplicated_Genes_YA_Up = Duplicated_Genes_Up[Duplicated_Genes_Up$OGDataset == "rbbp5_vs_N2_YA" | Duplicated_Genes_Up$OGDataset == "wdr5_vs_N2_YA" ,]
+
+#Heatmap code for the Duplicated gene Heatmaps
+ggplot(Duplicated_Genes_emb_Up, aes(OGDataset, WBGene_UID, fill=log2FoldChange)) + 
+  geom_tile() + 
+  scale_fill_gradient(low="orange", high="red") +
+  theme_classic() +
+  labs(x = element_blank(), y = "WB Gene ID", fill = "log2FC")
+
+
+#Function to print full rows of duplicated genes from Strict_Combined_Dataset
+print(StrictCombinedDataset[StrictCombinedDataset$WBGene_UID == "WBGene00010212",])
+
+#Making the Bar Graph
+BarGraph_Data <- data.frame(Diff = c("Up","Down"), 
+                            Rb_emb_1FC = c(1453, 108), Rb_emb_2FC = c(626, 25), Rb_emb_3FC = c(239, 10),
+                            Rb_YA_1 = c(2276, 695), Rb_YA_2 = c(1315, 63), Rb_YA_3 = c(643, 23),
+                            Wd_emb_1FC = c(2973, 1147), Wd_emb_2FC = c(1392, 138), Wd_emb_3FC = c(444, 68),
+                            Wd_YA_1FC = c(873, 302), Wd_YA_2FC = c(502, 70), Wd_YA_3FC = c(234, 24))
+
+BarGraph_Data <- as.matrix(BarGraph_Data)
+colnames(BarGraph_Data) [5]="Rb_YA_1FC"
+colnames(BarGraph_Data) [6]="Rb_YA_2FC"
+colnames(BarGraph_Data) [7]="Rb_YA_3FC"
+colnames(BarGraph_Data) [11]="Wd_YA_1FC"
+colnames(BarGraph_Data) [12]="Wd_YA_2FC"
+colnames(BarGraph_Data) [13]="Wd_YA_3FC"
+
+BarGraph_Data <-t(BarGraph_Data)
+colnames(BarGraph_Data) [2]="Down"
+colnames(BarGraph_Data) [1]="Up"
+
+BarGraph_Data <- BarGraph_Data[-1,]
+BarGraph_Data <-t(BarGraph_Data)
+
+
+barplot(BarGraph_Data, beside = TRUE, col = c("Up", "Down"), legend = TRUE)
+
+BarGraph_Thresholds <- barplot(BarGraph_Data)
+
+#Bar charts Up vs Down:
+
+BarChart_rbbp5_vs_N2_emb <- ggplot(data = count_data_Dataset1, aes(x = diffexpressed, y = count)) +
+  geom_col(fill = "lightblue", color = "black") +
+  geom_text(aes(label = count), vjust = -0.3) +
+  labs(y = "Gene Count", x = element_blank()) +
+  theme_minimal()
+print(BarChart_rbbp5_vs_N2_emb)
+
+BarChart_rbbp5_vs_N2_YA <- ggplot(data = count_data_Dataset4, aes(x = diffexpressed, y = count)) +
+  geom_col(fill = "lightblue", color = "black") +
+  geom_text(aes(label = count), vjust = -0.3) +
+  labs(y = "Gene Count", x = element_blank()) +
+  theme_minimal()
+print(BarChart_rbbp5_vs_N2_YA)
+
+BarChart_wdr5_vs_N2_emb <- ggplot(data = count_data_Dataset7, aes(x = diffexpressed, y = count)) +
+  geom_col(fill = "lightblue", color = "black") +
+  geom_text(aes(label = count), vjust = -0.3) +
+  labs(y = "Gene Count", x = element_blank()) +
+  theme_minimal()
+print(BarChart_wdr5_vs_N2_emb)
+
+BarChart_wdr5_vs_N2_YA <- ggplot(data = count_data_Dataset10, aes(x = diffexpressed, y = count)) +
+  geom_col(fill = "lightblue", color = "black") +
+  geom_text(aes(label = count), vjust = -0.3) +
+  labs(y = "Gene Count", x = element_blank()) +
+  theme_minimal()
+print(BarChart_wdr5_vs_N2_YA)
